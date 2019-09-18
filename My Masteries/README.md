@@ -1,3 +1,6 @@
+﻿# My Masteries
+
+A quite straightforward web app made in node.js using typescript. \
 The app's goal is to display the desired player's masteries from Riot's API.
 
 ### Install
