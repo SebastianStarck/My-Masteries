@@ -1,0 +1,13 @@
+﻿extends components/app.pug
+
+block content
+    div(class="container")
+        div(class="row h-100 justify-content-center align-items-center")
+            div(class="col-md-5 search-wrapper")
+                h1 Masteries
+                ul
+                  each mastery in topMasteries
+                    li
+                        div
+                            p= `Points: ${mastery.championPoints}`
+                            p= `Champion: ${mastery.championId}`
