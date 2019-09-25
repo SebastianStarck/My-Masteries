@@ -350,3 +350,4 @@ MigrationBackup/
 My Masteries/.env
 *.js
 My Masteries/node_modules/
+*.map

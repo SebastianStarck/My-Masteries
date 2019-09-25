@@ -5,9 +5,9 @@ head
          title #{title}
     else    
         title 'My Masteries'    
-
-    styles
-        block styles
+        
+    block styles
+        link(rel="stylesheet" type="text/css" href= "../../../public/css/" + view + ".css")
 
     scripts 
         block scripts
