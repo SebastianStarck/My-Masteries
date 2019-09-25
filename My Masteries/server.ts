@@ -1,41 +1,53 @@
 ﻿import { InvalidArgumentError, SummonerNotFound, MasteriesNotFound } from "./ts/Exceptions";
-import SummonerController = require('./ts/SummonerController')
-import ViewController = require('./ts/ViewController')
+import SummonerController = require('./src/ts/SummonerController')
+import ViewController = require('./src/ts/ViewController')
 
 import http = require('http');
 import url = require('url');
+import path = require('path');
+import fs = require('fs');
+
+
 const port = 8080;
 
 http.createServer(function (req, res) {
     const parsedUrl = url.parse(req.url, true);
 
     if (req.url == '/') {
-        res.end(ViewController.compileTemplate('home', { title: 'My Masteries' }))
+        ViewController.renderHome(res);
     }
-    else if (parsedUrl.pathname == '/search_summoner') {
-        handleSearch(req, res, parsedUrl)
+
+    if (parsedUrl.pathname == '/search_summoner') {
+        handleSearch(res, parsedUrl);
+    }
+
+    if (req.url.indexOf('.css') != -1 || req.url.indexOf('.js') != -1) {
+        handleResource(req, res, parsedUrl);
     } else {
-        res.end(ViewController.compileTemplate('error', { title: 'Not found', errorText: 'foobar' }));
+        ViewController.renderError(res, '404');
     }
 }).listen(port);
 
-async function handleSearch(req, res, parsedReq: any) {
-    const { summoner_name: summonerName, region } = parsedReq.query;
+function handleResource(req, res, parsedUrl): void {
+    const fileExt = req.url.indexOf('.css') != -1 ? 'css' : 'javascript'
+    const resourcePath = path.join(__dirname, parsedUrl.pathname);
+    fs.readFile(resourcePath, function (err, data) {
+        if (err) ViewController.renderError(res, '404', fileExt);
+        res.writeHead(200, { 'Content-Type': 'text/' + fileExt });
+        res.end(data);
+    });
+}
+
+async function handleSearch(res, parsedUrl: any) {
+    const { summoner_name: summonerName, region } = parsedUrl.query;
     let summoner;
 
     try {
         summoner = await SummonerController.searchSummoner(summonerName, region);
     } catch (e) {
         if (e instanceof InvalidArgumentError) {
-            res.end(ViewController.compileTemplate('home', {
-                displayError: true,
-                errorText: 'Sorry, something went wrong!'
-            }));
         } else if (e instanceof SummonerNotFound) {
-            res.end(ViewController.compileTemplate('home', {
-                displayError: true,
-                errorText: `Sorry, we have not found any summoner named ${summonerName}!`
-            }));
+            ViewController.renderSummonerNotFound(res, summonerName);
         }
     };
 
@@ -47,19 +59,12 @@ async function handleSearch(req, res, parsedReq: any) {
         } catch (e) {
             console.log(e);
             if (e instanceof MasteriesNotFound || e instanceof InvalidArgumentError) {
-                res.end(ViewController.compileTemplate('error', {
-                    errorText: `Masteries not found!`
-                }));
+                ViewController.renderError(res, '404');
             }
         }
 
         if (masteries) {
-            res.end(ViewController.compileTemplate('masteries_profile', {
-                title: `${summoner.name || 'Summoner'}'s Masteries`,
-                summoner,
-                topMasteries: masteries.slice(0, 5),
-                masteries            
-            }));      
+            ViewController.renderSummonerMasteries(res, summoner, masteries);
         }
     }
 }
