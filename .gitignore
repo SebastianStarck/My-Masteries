@@ -348,6 +348,7 @@ healthchecksdb
 # Backup folder for Package Reference Convert tool in Visual Studio 2017
 MigrationBackup/
 My Masteries/.env
-*.js
 My Masteries/node_modules/
+My Masteries\public
 *.map
+*.js
