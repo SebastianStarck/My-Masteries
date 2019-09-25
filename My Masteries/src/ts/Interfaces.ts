@@ -12,6 +12,7 @@ export interface Summoner {
 }
 
 export declare interface TemplateData {
+    view: string,
     title?: string;
     mainText?: string;
     displayError?: boolean;
@@ -19,6 +20,7 @@ export declare interface TemplateData {
 }
 
 export declare interface MasteriesData{
+    view: string;
     title: string;
     masteries: Array<ChampionMastery>;
     topMasteries: Array<ChampionMastery>
