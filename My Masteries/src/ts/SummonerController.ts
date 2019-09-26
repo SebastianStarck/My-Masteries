@@ -10,7 +10,6 @@ export async function searchSummoner(name: string, region: string): Promise<Summ
 export async function searchSummonerMasteries(summoner: Summoner): Promise<Array<ChampionMastery>> {
     const search = createSearch();
 
-    console.log(summoner);
     return await search.searchSummonerMasteries(summoner)
 }
 
