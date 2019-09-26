@@ -1,3 +1,17 @@
-﻿.search-wrapper, .container {
-    background-color: purple;
+﻿@import "variables";
+
+.container {
+    max-width: inherit;
+
+    .search-wrapper {
+        margin: 0 auto;
+
+        .summoner-name, .region {
+            height: 2em;
+        }
+
+        .submit {
+            height: 2.18em;
+        }
+    }
 }

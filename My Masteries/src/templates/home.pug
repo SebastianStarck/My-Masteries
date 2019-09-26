@@ -3,11 +3,20 @@
 block content
     div(class="container")
         div(class="row")
-            div(class="col-md-5 search-wrapper")
-                h1 <span>My</span> Masteries
-                form(method="GET" action="/search_summoner")
-                    input(type="text" name="summoner_name" placeholder="Search summoner" required="required")
-                    select(name="region")
+            div(class="col-md-4 search-wrapper")
+                form(
+                    method="GET" 
+                    action="/search_summoner" 
+                    autocomplete="off"
+                    )
+                    input(
+                        type="text" 
+                        name="summoner_name" 
+                        placeholder="Search summoner" 
+                        required="required"
+                        class="summoner-name"
+                        )
+                    select(name="region" class="region")
                         option(value="BR1") BR
                         option(value="EUN1") EUNE
                         option(value="EUW1") EUNW
@@ -19,5 +28,5 @@ block content
                         option(value="OC1") OCE
                         option(value="TR1") TR
                         option(value="RU") RU
-                    input(type="submit" value="Search")
+                    input(type="submit" value="Search" class="submit")
         include components/error.pug

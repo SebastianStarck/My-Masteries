@@ -1,0 +1,28 @@
+﻿@import 'variables.scss';
+
+* {
+    font-family: 'Raleway', sans-serif;
+}
+
+header {
+    .row {
+        margin: 0 2em;
+        padding-bottom: 0.6em;
+    }
+
+    span {
+        font-size: 3em;
+    }
+
+    span:first-child {
+        color: #FFFFFF;
+        background-color: #191919;
+        padding: 0.2em;
+        margin-right: -10px;
+    }
+
+    span:last-child {
+        background-color: #B35B93;
+        padding: 0.2em;
+    }
+}
