@@ -38,7 +38,13 @@
   <ItemGroup>
     <TypeScriptCompile Include="server.ts" />
     <Content Include=".env" />
+    <Content Include="src\scss\app.scss">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\scss\home.scss">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\scss\variables.scss">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\templates\components\app.pug">
@@ -48,6 +54,9 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\templates\components\error.pug">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\templates\components\header.pug">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\templates\home.pug">
@@ -71,9 +80,6 @@
     <TypeScriptCompile Include="src\ts\Interfaces.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\ts\ResourceController.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="src\ts\SummonerController.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -90,7 +96,6 @@
   <ItemGroup>
     <Folder Include="src\scss\" />
     <Folder Include="public\" />
-    <Folder Include="public\css\" />
     <Folder Include="src\" />
     <Folder Include="src\templates\" />
     <Folder Include="src\templates\components\" />
