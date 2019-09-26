@@ -64,7 +64,8 @@ async function handleSearch(res, parsedUrl: any) {
         }
 
         if (masteries) {
-            ViewController.renderSummonerMasteries(res, summoner, masteries);
+            const champions = await Champion.getMappedChampions();
+            ViewController.renderSummonerMasteries(res, summoner, masteries, champions);
         }
     }
 }
