@@ -36,12 +36,13 @@ export function renderError(res, error?: string, fileExt?: string): void {
     }));
 }
 
-export function renderSummonerMasteries(res, summoner: Summoner, masteries: Array<ChampionMastery>): void {
+export function renderSummonerMasteries(res, summoner: Summoner, masteries: Array<ChampionMastery>, champions: Array<object>): void {
     res.end(compileTemplate({
         view: 'masteries_profile',
         title: `${summoner.name || 'Summoner'}'s Masteries`,
         summoner,
         topMasteries: masteries.slice(0, 5),
-        masteries
+        masteries,
+        champions
     }));
 }

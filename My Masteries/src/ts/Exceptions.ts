@@ -21,3 +21,11 @@ export class MasteriesNotFound extends Error {
         this.name = MasteriesNotFound.name;
     }
 }
+
+export class ChampionsDataNotFound extends Error {
+    constructor(message?: string) {
+        super(message);
+        Object.setPrototypeOf(this, new.target.prototype);
+        this.name = ChampionsDataNotFound.name;
+    }
+}

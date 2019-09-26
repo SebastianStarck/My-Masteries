@@ -3,6 +3,13 @@
     championPoints: number;
 }
 
+export interface Champion {
+    id: number;
+    name: string;
+    title: string;
+    tags: Array<string>;
+}
+
 export interface Summoner {
     id: string;
     name: string;
@@ -25,4 +32,5 @@ export declare interface MasteriesData{
     masteries: Array<ChampionMastery>;
     topMasteries: Array<ChampionMastery>
     summoner: Summoner;
+    champions: Array<object>;
 }
