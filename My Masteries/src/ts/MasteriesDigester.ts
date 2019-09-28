@@ -7,6 +7,7 @@ export function digestMasteries(masteries: Array<IChampionMastery>) {
         Champions.getChampionAdvancedTagNames(), Champions.getChampionLanesNames(), Champions.getBaseTagNames()
     );
 
+    masteriesProfile.totalMasteryPoints = addUpMasteriesPoints(masteries);
     masteries.forEach(function (championMastery) {
         const champion = championsData.get(`${championMastery.championId}`);
         champion.tags.forEach((tag) => {
@@ -31,7 +32,14 @@ export function digestMasteries(masteries: Array<IChampionMastery>) {
     return masteriesProfile;
 }
 
+function addUpMasteriesPoints(masteries: Array<IChampionMastery>): number {
+    return masteries
+        .map((championMastery) => { return championMastery.championPoints })
+        .reduce((accumulator, currentValue) => accumulator + currentValue);
+}
+
 export class MasteriesProfile {
+    totalMasteryPoints: number;
     constructor(advancedTags, lanes, tags) {
         this.tags = new Map();
         this.lanes = new Map();
