@@ -6,11 +6,14 @@ import fs = require('fs');
 import Search = require('./src/ts/Search');
 import ViewController = require('./src/ts/ViewController');
 import Champions = require('./src/ts/Champions');
+import { cache, cacheSummoner } from './src/ts/Cache';
+import { digestMasteries, MasteriesProfile } from './src/ts/MasteriesDigester';
 const port = 8080;
 
 http.createServer(function (req, res) {
     const parsedUrl = url.parse(req.url, true);
 
+    cache.flushAll();
     if (req.url == '/') {
         ViewController.renderHome(res);
     }
@@ -36,34 +39,17 @@ function handleResource(req, res, parsedUrl): void {
     });
 }
 
-async function handleSearch(res, parsedUrl: any) {
-    const { summoner_name: summonerName, region } = parsedUrl.query;
-    let summoner;
+async function handleSearch(res, parsedUrl) {
+    const summoner = await Search.getSummoner(res, parsedUrl);
+    const champions = await Champions.getMappedChampions();
 
-    try {
-        summoner = await SummonerController.searchSummoner(summonerName, region);
-    } catch (e) {
-        if (e instanceof InvalidArgumentError) {
-        } else if (e instanceof SummonerNotFound) {
-            ViewController.renderSummonerNotFound(res, summonerName);
-        }
-    };
+    const digestedMasteries = digestMasteries(summoner.masteries);
+    summoner.masteriesProfile = digestedMasteries;
+    cacheSummoner(summoner);
 
-    if (summoner) {
-        let masteries;
-
-        try {
-            masteries = await SummonerController.searchSummonerMasteries(summoner);
-        } catch (e) {
-            console.log(e);
-            if (e instanceof MasteriesNotFound || e instanceof InvalidArgumentError) {
-                ViewController.renderError(res, '404');
-            }
-        }
-
-        if (masteries) {
-            const champions = await Champion.getMappedChampions();
-            ViewController.renderSummonerMasteries(res, summoner, masteries, champions);
-        }
+    if (!summoner.masteriesProfile) {
+        console.log('yikes');
     }
+
+    ViewController.renderSummonerMasteries(res, summoner, champions);
 }
