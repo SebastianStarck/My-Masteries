@@ -18,3 +18,14 @@ export function getChampionsDataFromCache(): Map<string, IChampion> | undefined 
 export function cacheChampionsData(championsData: Map<string, IChampion>): boolean {
     return cache.set('mappedChampions', championsData, cacheDurationInDays * 86400);
 }
+
+export function getLocale(): string {
+    let locale;
+    cache.get('locale', function (e, value) {
+        if (!e) {
+            locale = value != undefined ? value : process.env.DEFAULT_LOCALE;
+        }
+    });
+
+    return locale;
+}
