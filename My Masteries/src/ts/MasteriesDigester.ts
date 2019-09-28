@@ -4,7 +4,9 @@ import Champions = require('./Champions');
 export function digestMasteries(masteries: Array<IChampionMastery>) {
     const championsData = Champions.getMappedChampions();
     const masteriesProfile = new MasteriesProfile(
-        Champions.getChampionAdvancedTagNames(), Champions.getChampionLanesNames(), Champions.getBaseTagNames()
+        Champions.getChampionAdvancedTagNames(),
+        Champions.getChampionLanesNames(),
+        Champions.getBaseTagNames()
     );
 
     masteriesProfile.totalMasteryPoints = addUpMasteriesPoints(masteries);
@@ -37,10 +39,11 @@ function digestSubAttribute(attributeName: string, championMastery: IChampionMas
 
 export class MasteriesProfile {
     totalMasteryPoints: number;
-    constructor(advancedTags, lanes, tags) {
     tags: Map<string, number>;
     advancedTags: Map<string, number>;
     lanes: Map<string, number>;
+
+    constructor(advancedTags: Array<string>, lanes: Array<string>, tags: Array<string>) {
         this.tags = new Map();
         this.lanes = new Map();
         this.advancedTags = new Map();
