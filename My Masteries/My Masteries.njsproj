@@ -38,10 +38,17 @@
   <ItemGroup>
     <TypeScriptCompile Include="server.ts" />
     <Content Include=".env" />
+    <Content Include="example.env" />
     <Content Include="src\scss\app.scss">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\scss\home.scss">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\scss\masteries_profile.scss">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\scss\top_masteries.scss">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\scss\variables.scss">
@@ -77,13 +84,16 @@
     <Content Include="tsconfig.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <TypeScriptCompile Include="src\ts\Cache.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\ts\Interfaces.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\ts\SummonerController.ts">
+    <TypeScriptCompile Include="src\ts\MasteriesDigester.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\ts\SummonerSearch.ts">
+    <TypeScriptCompile Include="src\ts\Search.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ts\Exceptions.ts">
@@ -104,6 +114,9 @@
     <Folder Include="src\ts\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\ts\Champions.ts">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="webpack.mix.js" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
