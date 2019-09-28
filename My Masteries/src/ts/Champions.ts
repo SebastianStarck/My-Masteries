@@ -39,6 +39,7 @@ async function mapChampions(): Promise<Map<string, IChampion>> {
     return mappedChampions;
 }
 
+// TODO: Tidy up error handling
 async function retrieveChampionsData(): Promise<object> {
     const source = `http://ddragon.leagueoflegends.com/cdn/${process.env.DDRAGON_VERSION}/data/${getLocale()}/champion.json`;
     let response = await axios.get(source).catch((e) => console.log(e));
@@ -47,77 +48,26 @@ async function retrieveChampionsData(): Promise<object> {
 }
 
 function getChampionAdvancedTags(champion: string): Array<string> {
-    const advancedTags = {
-        // Controllers
-        catchers: [
-            'Bard', 'Blitzcrank', 'Ivern', 'Jhin', 'Lux', 'Morgana', 'Neeko', 'Rakan', 'Thresh', 'Zyra'
-        ],
-        enchanters: [
-            'Janna', 'Lulu', 'Nami', 'Sona', 'Soraka', 'Taric', 'Yuumi'
-        ],
-
-        // Fighers 
-        divers: [
-            'Camille', 'Diana', 'Elise', 'Hecarim', 'Irelia', 'JarvanIV', 'LeeSin', 'Olaf',
-            'Pantheon', 'RekSai', 'Rengar', 'Skarner', 'Vi', 'Warwick', 'Wukong', 'XinZhao',
-        ],
-        juggernauts: [
-            'Aatrox', 'Darius', 'DrMundo', 'Garen', 'Illaoi', 'Mordekaiser',
-            'Nasus', 'Shyvana', 'Trundle', 'Udyr', 'Urgot', 'Volibear', 'Yorick'
-        ],
-
-        // Mages
-        bursters: [
-            'Ahri', 'Annie', 'Brand', 'Karma', 'LeBlanc', 'Lissandra', 'Lux', 'Neeko',
-            'Orianna', 'Sylas', 'Syndra', 'TwistedFate', 'Veigar', 'Zoe', 'Zyra'
-        ],
-        battlemages: [
-            'Anivia', 'AurelionSol', 'Cassiopeia', 'Karthus', 'Malzahar', 'Morgana',
-            'Rumble', 'Ryze', 'Swain', 'Taliyah', 'Viktor', 'Vladimir',
-        ],
-        artilleries: [
-            'Jayce', 'Lux', 'Varus', 'VelKoz', 'Xerath', 'Ziggs', 'Zoe',
-        ],
-
-        // Marksman
-        marksmen: [
-            'Ashe', 'Caitlyn', 'Corki', 'Draven', 'Ezreal', 'Jhin', 'Jinx', 'KaiSa', 'Kalista', 'Kindred',
-            'KogMaw', 'Lucian', 'MissFortune', 'Sivir', 'Tristana', 'Twitch', 'Varus', 'Vayne', 'Xayah'
-        ],
-
-        // Slayers
-        assassins: [
-            'Ahri', 'Akali', 'Diana', 'Ekko', 'Evelynn', 'Fizz', 'Kassadin', 'Kayn',
-            'KhaZix', 'Nocturne', 'Pyke', 'Qiyana', 'Rengar', 'Shaco', 'Talon', 'Zed',
-        ],
-        skirmishers: [
-            'Fiora', 'Jax', 'Kayn', 'Master', 'Yi', 'Riven', 'Sylas', 'Tryndamere', 'Yasuo'
-        ],
-
-        // Specialists
-        specialists: [
-            'Azir', 'ChoGath', 'Fiddlesticks', 'Gangplank', 'Gnar', 'Graves', 'Heimerdinger',
-            'Kayle', 'Kennen', 'Nidalee', 'Quinn', 'Singed', 'Teemo', 'Zilean',
-        ],
-
-        // Tanks
-        vanguards: [
-            'Alistar', 'Amumu', 'Gnar', 'Gragas', 'Leona', 'Malphite', 'Maokai',
-            'Nautilus', 'Nunu', 'Ornn', 'Rammus', 'Sejuani', 'Sion', 'Zac',
-        ],
-        wardens: [
-            'Braum', 'ChoGath', 'Galio', 'Poppy', 'Shen', 'TahmKench', 'Taric',
-        ]
-    }
+    const championsByAdvancedTags = getChampionsByAdvancedTags();
     const advancedTagNames = getChampionAdvancedTagNames();
 
     return advancedTagNames.filter(function (tag: string) {
-        return advancedTags[tag].indexOf(champion) != -1;
+        return championsByAdvancedTags[tag].indexOf(champion) != -1;
     });
 }
 
 function getChampionLanes(champion: string): Array<string> {
-    const lanes = {
+    const championsByLane = getChampionsByLane();
+    const laneNames = getChampionLanesNames();
+
+    return laneNames.filter(function (lane: string) {
+        return championsByLane[lane].indexOf(champion) != -1;
+    });
+}
+
+// TODO: Review data storing
+export function getChampionsByLane(): object {
+    return {
         top: [
             'Aatrox', 'Akali', 'Camille', 'ChoGath', 'Darius', 'DrMundo', 'Fiora', 'Gangplank', 'Garen',
             'Gnar', 'Illaoi', 'Irelia', 'Jax', 'Jayce', 'Kayle', 'Kennen', 'Kled', 'Malphite', 'Maokai',
@@ -151,39 +101,89 @@ function getChampionLanes(champion: string): Array<string> {
             'Yuumi', 'Zilean', 'Zyra',
         ]
     };
-    const laneNames = getChampionLanesNames();
+}
 
-    return laneNames.filter(function (lane: string) {
-        return lanes[lane].indexOf(champion) != -1;
-    });
+export function getChampionsByAdvancedTags(): object {
+    return {
+        // Controllers
+        catcher: [
+            'Bard', 'Blitzcrank', 'Ivern', 'Jhin', 'Lux', 'Morgana', 'Neeko', 'Rakan', 'Thresh', 'Zyra'
+        ],
+        enchanter: [
+            'Janna', 'Lulu', 'Nami', 'Sona', 'Soraka', 'Taric', 'Yuumi'
+        ],
+
+        // Fighers 
+        diver: [
+            'Camille', 'Diana', 'Elise', 'Hecarim', 'Irelia', 'JarvanIV', 'LeeSin', 'Olaf',
+            'Pantheon', 'RekSai', 'Rengar', 'Skarner', 'Vi', 'Warwick', 'Wukong', 'XinZhao',
+        ],
+        juggernaut: [
+            'Aatrox', 'Darius', 'DrMundo', 'Garen', 'Illaoi', 'Mordekaiser',
+            'Nasus', 'Shyvana', 'Trundle', 'Udyr', 'Urgot', 'Volibear', 'Yorick'
+        ],
+
+        // Mages
+        burst: [
+            'Ahri', 'Annie', 'Brand', 'Karma', 'LeBlanc', 'Lissandra', 'Lux', 'Neeko',
+            'Orianna', 'Sylas', 'Syndra', 'TwistedFate', 'Veigar', 'Zoe', 'Zyra'
+        ],
+        battlemage: [
+            'Anivia', 'AurelionSol', 'Cassiopeia', 'Karthus', 'Malzahar', 'Morgana',
+            'Rumble', 'Ryze', 'Swain', 'Taliyah', 'Viktor', 'Vladimir',
+        ],
+        artillery: [
+            'Jayce', 'Lux', 'Varus', 'VelKoz', 'Xerath', 'Ziggs', 'Zoe',
+        ],
+
+        // Marksman
+        marksman: [
+            'Ashe', 'Caitlyn', 'Corki', 'Draven', 'Ezreal', 'Jhin', 'Jinx', 'KaiSa', 'Kalista', 'Kindred',
+            'KogMaw', 'Lucian', 'MissFortune', 'Sivir', 'Tristana', 'Twitch', 'Varus', 'Vayne', 'Xayah'
+        ],
+
+        // Slayers
+        assassin: [
+            'Ahri', 'Akali', 'Diana', 'Ekko', 'Evelynn', 'Fizz', 'Kassadin', 'Kayn',
+            'KhaZix', 'Nocturne', 'Pyke', 'Qiyana', 'Rengar', 'Shaco', 'Talon', 'Zed',
+        ],
+        skirmisher: [
+            'Fiora', 'Jax', 'Kayn', 'Master', 'Yi', 'Riven', 'Sylas', 'Tryndamere', 'Yasuo'
+        ],
+
+        // Specialists
+        specialist: [
+            'Azir', 'ChoGath', 'Fiddlesticks', 'Gangplank', 'Gnar', 'Graves', 'Heimerdinger',
+            'Kayle', 'Kennen', 'Nidalee', 'Quinn', 'Singed', 'Teemo', 'Zilean',
+        ],
+
+        // Tanks
+        vanguard: [
+            'Alistar', 'Amumu', 'Gnar', 'Gragas', 'Leona', 'Malphite', 'Maokai',
+            'Nautilus', 'Nunu', 'Ornn', 'Rammus', 'Sejuani', 'Sion', 'Zac',
+        ],
+        warden: [
+            'Braum', 'ChoGath', 'Galio', 'Poppy', 'Shen', 'TahmKench', 'Taric',
+        ]
+    }
 }
 
 export function getChampionAdvancedTagNames(): Array<string> {
-    return [
-        'catchers', 'enchanters', 'juggernauts', 'divers', 'artilleries', 'battlemages', 'bursters',
-        'marksmen', 'assassins', 'skirmishers', 'specialists', 'vanguards', 'wardens'
-    ];
+    return Object.keys(getChampionsByAdvancedTags());
 }
 
 export function getChampionLanesNames(): Array<string> {
-    return [
-        'top', 'jungle', 'mid', 'bottom', 'support',
-    ];
+    return Object.keys(getChampionsByLane());
 }
 
 export function getBaseTagNames(): Array<string> {
     return [
         'fighter', 'tank', 'support', 'marksman', 'mage', 'assassin'
-    ]
+    ];
 }
 
-function getLocale(): string {
-    let locale;
-    cache.get('locale', function (e, value) {
-        if (!e) {
-            locale = value != undefined ? value : process.env.DEFAULT_LOCALE;
-        }
-    });
-
-    return locale;
+export function getInfoStats(): Array<string> {
+    return [
+        'attack', 'defense', 'magic', 'difficulty',
+    ];
 }
