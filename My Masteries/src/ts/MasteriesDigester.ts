@@ -66,4 +66,12 @@ export class MasteriesProfile {
         });
     };
 
+    public getAttributeByContribution = (attribute): Map<string, number> => {
+        const map = new Map();
+        this[attribute].forEach((value, key): void => {
+            map.set(`${key}`, (value / this.totalMasteryPoints) * 100);
+        });
+
+        return map;
+    };
 }
