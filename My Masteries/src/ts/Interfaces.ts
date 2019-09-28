@@ -1,4 +1,6 @@
-﻿export interface ChampionMastery {
+﻿import { MasteriesProfile } from "./MasteriesDigester";
+
+export interface ChampionMastery {
     championId: number;
     championPoints: number;
 }
@@ -8,6 +10,8 @@ export interface Champion {
     name: string;
     title: string;
     tags: Array<string>;
+    advancedTags: Array<string>
+    lanes: Array<string>;
 }
 
 export interface Summoner {
@@ -16,21 +20,26 @@ export interface Summoner {
     summonerLevel: number;
     profileIconId: number;
     region: string;
+    masteries?: Array<ChampionMastery>;
+    masteriesProfile?: MasteriesProfile;
 }
 
 export declare interface TemplateData {
-    view: string,
+    view: string;
+    ddragonVersion?: string;
     title?: string;
     mainText?: string;
     displayError?: boolean;
     errorText?: string;
 }
 
+// Rename odd name
 export declare interface MasteriesData{
     view: string;
     title: string;
+    ddragonVersion?: string;
     masteries: Array<ChampionMastery>;
     topMasteries: Array<ChampionMastery>
     summoner: Summoner;
-    champions: Array<object>;
+    champions: Map<string, Champion>;
 }
