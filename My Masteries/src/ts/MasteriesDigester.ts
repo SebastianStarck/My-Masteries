@@ -17,6 +17,11 @@ export function digestMasteries(masteries: Array<IChampionMastery>) {
             champion[attribute].forEach(digestSubAttribute(attribute, championMastery, masteriesProfile));
         });
 
+        Champions.getInfoStats().forEach((stat) => {
+            const currentStatScore = masteriesProfile.averageStats.get(stat) || 0;
+            const championStatCoefficient =
+                (championMastery.championPoints / masteriesProfile.totalMasteryPoints) * champion.info[stat];
+            masteriesProfile.averageStats.set(`${stat}`, currentStatScore + championStatCoefficient);
         })
     });
 
@@ -39,11 +44,13 @@ function digestSubAttribute(attributeName: string, championMastery: IChampionMas
 
 export class MasteriesProfile {
     totalMasteryPoints: number;
+    averageStats: Map<string, number>;
     tags: Map<string, number>;
     advancedTags: Map<string, number>;
     lanes: Map<string, number>;
 
     constructor(advancedTags: Array<string>, lanes: Array<string>, tags: Array<string>) {
+        this.averageStats = new Map();
         this.tags = new Map();
         this.lanes = new Map();
         this.advancedTags = new Map();
@@ -57,6 +64,6 @@ export class MasteriesProfile {
         lanes.forEach((laneName) => {
             this.lanes.set(`${laneName}MasteryPoints`, 0);
         });
-    }
+    };
 
 }
