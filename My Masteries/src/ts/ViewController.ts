@@ -1,8 +1,10 @@
 ﻿import { TemplateData, MasteriesData, Summoner, ChampionMastery, Champion } from "./Interfaces";
 const path = require('path');
 const pug = require('pug');
+require('dotenv').config();
 
 function compileTemplate(data: TemplateData | MasteriesData): string {
+    data.ddragonVersion = process.env.DDRAGON_VERSION;
     return pug.renderFile(`src/templates/${data.view}.pug`, data || {
         title: 'My Masteries',
         stylesheet: path.join('./', data.view),

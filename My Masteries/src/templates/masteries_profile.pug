@@ -7,9 +7,9 @@ block content
                 h1 #{summoner.name}'s masteries
                 ul
                   each mastery in topMasteries
-                    - const championName = champions[mastery.championId]['id'];
+                    - const championName = champions.get(`${mastery.championId}`).id;
                     li
                         div
-                            img(src="http://ddragon.leagueoflegends.com/cdn/" + process.env.DDRAGON_VERSION + "/img/champion/" + championName + ".png")
+                            img(src="http://ddragon.leagueoflegends.com/cdn/" + ddragonVersion + "/img/champion/" + championName + ".png")
                             p= `Points: ${mastery.championPoints}`
                             p= `Champion: ${championName}`
