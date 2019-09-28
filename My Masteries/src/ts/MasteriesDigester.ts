@@ -1,7 +1,7 @@
-﻿import { ChampionMastery } from "./Interfaces";
+﻿import { IChampionMastery } from "./Interfaces";
 import Champions = require('./Champions');
 
-export function digestMasteries(masteries: Array<ChampionMastery>) {
+export function digestMasteries(masteries: Array<IChampionMastery>) {
     const championsData = Champions.getMappedChampions();
     const masteriesProfile = new MasteriesProfile(
         Champions.getChampionAdvancedTagNames(), Champions.getChampionLanesNames(), Champions.getBaseTagNames()

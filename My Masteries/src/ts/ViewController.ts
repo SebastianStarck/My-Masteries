@@ -1,9 +1,9 @@
-﻿import { TemplateData, MasteriesData, Summoner, ChampionMastery, Champion } from "./Interfaces";
+﻿import { ITemplateData, ITemplateDataMasteries, ISummoner, IChampionMastery, IChampion } from "./Interfaces";
 const path = require('path');
 const pug = require('pug');
 require('dotenv').config();
 
-function compileTemplate(data: TemplateData | MasteriesData): string {
+function compileTemplate(data: ITemplateData | ITemplateDataMasteries): string {
     data.ddragonVersion = process.env.DDRAGON_VERSION;
     return pug.renderFile(`src/templates/${data.view}.pug`, data || {
         title: 'My Masteries',
@@ -38,7 +38,7 @@ export function renderError(res, error?: string, fileExt?: string): void {
     }));
 }
 
-export function renderSummonerMasteries(res, summoner: Summoner, champions: Map<string, Champion>): void {
+export function renderSummonerMasteries(res, summoner: ISummoner, champions: Map<string, IChampion>): void {
     res.end(compileTemplate({
         view: 'masteries_profile',
         title: `${summoner.name || 'Summoner'}'s Masteries`,

@@ -1,30 +1,31 @@
 ﻿import { MasteriesProfile } from "./MasteriesDigester";
 
-export interface ChampionMastery {
+export interface IChampionMastery {
     championId: number;
     championPoints: number;
 }
 
-export interface Champion {
+export interface IChampion {
     id: number;
     name: string;
     title: string;
+    info: object;
     tags: Array<string>;
     advancedTags: Array<string>
     lanes: Array<string>;
 }
 
-export interface Summoner {
+export interface ISummoner {
     id: string;
     name: string;
     summonerLevel: number;
     profileIconId: number;
     region: string;
-    masteries?: Array<ChampionMastery>;
+    masteries?: Array<IChampionMastery>;
     masteriesProfile?: MasteriesProfile;
 }
 
-export declare interface TemplateData {
+export declare interface ITemplateData {
     view: string;
     ddragonVersion?: string;
     title?: string;
@@ -33,13 +34,12 @@ export declare interface TemplateData {
     errorText?: string;
 }
 
-// Rename odd name
-export declare interface MasteriesData{
+export declare interface ITemplateDataMasteries{
     view: string;
     title: string;
     ddragonVersion?: string;
-    masteries: Array<ChampionMastery>;
-    topMasteries: Array<ChampionMastery>
-    summoner: Summoner;
-    champions: Map<string, Champion>;
+    masteries: Array<IChampionMastery>;
+    topMasteries: Array<IChampionMastery>
+    summoner: ISummoner;
+    champions: Map<string, IChampion>;
 }

@@ -1,9 +1,9 @@
-﻿import { cache, getChampionsDataFromCache, cacheChampionsData } from "./Cache";
-import { Champion } from "./Interfaces";
+﻿import { getChampionsDataFromCache, cacheChampionsData, getLocale } from "./Cache";
+import { IChampion } from "./Interfaces";
 const axios = require('axios');
 require('dotenv').config();
 
-export function getMappedChampions(): Map<string, Champion> {
+export function getMappedChampions(): Map<string, IChampion> {
     let championsData;
     championsData = getChampionsDataFromCache();
 
@@ -18,8 +18,8 @@ export function getMappedChampions(): Map<string, Champion> {
  * Champions are served as championName => {data} 
  * For practical reasons, champions are mapped as championId => {data} instead.
  */
-async function mapChampions(): Promise<Map<string, Champion>> {
-    const mappedChampions: Map<string, Champion> = new Map();
+async function mapChampions(): Promise<Map<string, IChampion>> {
+    const mappedChampions: Map<string, IChampion> = new Map();
     let championsData;
 
     championsData = await retrieveChampionsData().catch((e) => console.log(e));
@@ -27,7 +27,7 @@ async function mapChampions(): Promise<Map<string, Champion>> {
     for (let [_key, value] of Object.entries(championsData)) {
         const championId = value['key'];
 
-        const championData: Champion = <Champion>value;
+        const championData: IChampion = <IChampion>value;
         championData.advancedTags = getChampionAdvancedTags(_key);
         championData.lanes = getChampionLanes(_key);
 

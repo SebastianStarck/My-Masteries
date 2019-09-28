@@ -1,5 +1,5 @@
 ﻿import { InvalidArgumentError, SummonerNotFound, MasteriesNotFound } from './Exceptions';
-import { Summoner, ChampionMastery } from './Interfaces';
+import { ISummoner, IChampionMastery } from './Interfaces';
 import { cache, getSummonerFromCache, cacheSummoner } from './Cache';
 const ViewController = require('./ViewController');
 const axios = require('axios');
@@ -40,7 +40,7 @@ export async function getSummoner(res, parsedUrl: any) {
     return summoner;
 }
 
-async function searchSummoner(name: string, region: string): Promise<Summoner> {
+async function searchSummoner(name: string, region: string): Promise<ISummoner> {
     if (!name || !region) {
         throw new InvalidArgumentError();
     }
@@ -57,7 +57,7 @@ async function searchSummoner(name: string, region: string): Promise<Summoner> {
     }
 }
 
-async function searchMasteries(summoner: Summoner): Promise<Array<ChampionMastery>> {
+async function searchMasteries(summoner: ISummoner): Promise<Array<IChampionMastery>> {
     if (!summoner || !summoner.id) {
         throw new InvalidArgumentError();
     }
@@ -71,7 +71,7 @@ function parseSearchSummonerUrl(name: string, region: string): string {
     return `https://${region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${process.env.RIOT_KEY}`
 }
 
-function parseSearchSummonerMasteries(summoner: Summoner): string {
+function parseSearchSummonerMasteries(summoner: ISummoner): string {
     return `https://${summoner.region}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${summoner.id}?api_key=${process.env.RIOT_KEY}`
 }
 
