@@ -8,24 +8,13 @@ export function digestMasteries(masteries: Array<IChampionMastery>) {
     );
 
     masteriesProfile.totalMasteryPoints = addUpMasteriesPoints(masteries);
-    masteries.forEach(function (championMastery) {
+
+    masteries.forEach((championMastery) => {
         const champion = championsData.get(`${championMastery.championId}`);
-        champion.tags.forEach((tag) => {
-            const tagName = `${tag.toLowerCase()}MasteryPoints`;
-            const tagScore = masteriesProfile.tags.get(tagName) + championMastery.championPoints;
-            masteriesProfile.tags.set(`${tagName}`, tagScore);
-        })
+        ['tags', 'advancedTags', 'lanes'].forEach((attribute) => {
+            champion[attribute].forEach(digestSubAttribute(attribute, championMastery, masteriesProfile));
+        });
 
-        champion.advancedTags.forEach((tag) => {
-            const advancedTagName = `${tag.toLowerCase()}MasteryPoints`;
-            const tagScore = masteriesProfile.advancedTags.get(advancedTagName) + championMastery.championPoints;
-            masteriesProfile.advancedTags.set(`${advancedTagName}`, tagScore);
-        })
-
-        champion.lanes.forEach((lane) => {
-            const laneName = `${lane.toLowerCase()}MasteryPoints`;
-            const laneScore = masteriesProfile.lanes.get(laneName) + championMastery.championPoints
-            masteriesProfile.lanes.set(`${laneName}`, laneScore);
         })
     });
 
@@ -36,6 +25,14 @@ function addUpMasteriesPoints(masteries: Array<IChampionMastery>): number {
     return masteries
         .map((championMastery) => { return championMastery.championPoints })
         .reduce((accumulator, currentValue) => accumulator + currentValue);
+}
+
+function digestSubAttribute(attributeName: string, championMastery: IChampionMastery, masteriesProfile: MasteriesProfile): (value: string, index: number, array: string[]) => void {
+    return (subAttribute) => {
+        const subAttributeName = `${subAttribute.toLowerCase()}MasteryPoints`;
+        const subAttributeScore = masteriesProfile[attributeName].get(subAttributeName) + championMastery.championPoints;
+        masteriesProfile[attributeName].set(`${subAttributeName}`, subAttributeScore);
+    };
 }
 
 export class MasteriesProfile {
