@@ -1,13 +1,11 @@
-﻿import { InvalidArgumentError, SummonerNotFound, MasteriesNotFound } from "./ts/Exceptions";
-import SummonerController = require('./src/ts/SummonerController');
-import ViewController = require('./src/ts/ViewController');
-import Champion = require('./src/ts/Champion');
-import http = require('http');
+﻿import http = require('http');
 import url = require('url');
 import path = require('path');
 import fs = require('fs');
 
-
+import Search = require('./src/ts/Search');
+import ViewController = require('./src/ts/ViewController');
+import Champions = require('./src/ts/Champions');
 const port = 8080;
 
 http.createServer(function (req, res) {
