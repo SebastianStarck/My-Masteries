@@ -41,6 +41,9 @@ function addUpMasteriesPoints(masteries: Array<IChampionMastery>): number {
 export class MasteriesProfile {
     totalMasteryPoints: number;
     constructor(advancedTags, lanes, tags) {
+    tags: Map<string, number>;
+    advancedTags: Map<string, number>;
+    lanes: Map<string, number>;
         this.tags = new Map();
         this.lanes = new Map();
         this.advancedTags = new Map();
@@ -56,7 +59,4 @@ export class MasteriesProfile {
         });
     }
 
-    tags: Map<string, number>;
-    advancedTags: Map<string, number>;
-    lanes: Map<string, number>;
 }
