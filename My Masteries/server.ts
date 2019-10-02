@@ -49,6 +49,9 @@ async function handleSearch(res, parsedUrl) {
     const summoner = await Search.getSummoner(res, parsedUrl);
     const champions: Map<string, Champion> = Cache.getChampions();
 
+    const mappedMasteries = await mapMasteries(summoner.masteries);
+    summoner.masteriesProfile = mappedMasteries;
+    Cache.saveSummoner(summoner);
     const digestedMasteries = digestMasteries(summoner.masteries);
     summoner.masteriesProfile = digestedMasteries;
     cacheSummoner(summoner);
