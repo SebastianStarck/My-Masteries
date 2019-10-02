@@ -1,0 +1,56 @@
+﻿@import "variables";
+
+div.container {
+    max-width: inherit;
+    background-repeat: no-repeat;
+    background-image: url('/public/images/varus.jpg');
+    background-size: cover;
+    background-position-y: -100px;
+    min-height: 550px;
+
+    .search-wrapper {
+        margin: 0 auto;
+        margin-top: 8em;
+
+        .select-box {
+            float: left;
+            margin: 0;
+            border: 2px solid #000;
+            border-right: none;
+
+            .select-box__input-text {
+                background-color: $main-color-lightest;
+            }
+        }
+
+        .summoner-name {
+            height: 61px;
+            width: 70%;
+            padding: 0.5em;
+            font-size: 1.2em;
+            font-weight: bolder;
+            background-color: #ececec;
+            border: #000 2px solid;
+            border-left: none;
+        }
+
+        .submit {
+            border: 0;
+            background: none;
+            position: relative;
+            float: right;
+            bottom: 1.7em;
+            color: gray;
+        }
+    }
+
+    .subtitle {
+        margin: 0 auto;
+        font-size: 3em;
+        text-align: center;
+        padding-top: 2em;
+        color: #fff;
+        font-weight: bold;
+        font-variant-caps: small-caps;
+    }
+}

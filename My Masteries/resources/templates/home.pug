@@ -1,0 +1,28 @@
+﻿extends components/app.pug
+include components/mixins/dropdown.pug
+block content
+    div(class="container")
+        div(class="row")
+            div(class="col-md-4 search-wrapper")
+                form(
+                    method="GET" 
+                    action="/search_summoner" 
+                    autocomplete="off"
+                    )
+                    +SelectBox('region', [
+                        {name: 'LAS', value: 'LA2'},
+                        {name: 'BR', value: 'BR1'}, 
+                        {name: 'LAN', value: 'LA1'},
+                        {name: 'NA', value: 'NA1'},
+                    ])
+                    input(
+                        type="text" 
+                        name="summoner_name" 
+                        placeholder="Search summoner" 
+                        required="required"
+                        class="summoner-name"
+                        )
+                    <button type="Submit" value="" class="material-icons submit">double_arrow</input>
+        div(class="row")
+            div(class="subtitle") My Masteries
+        include components/error.pug

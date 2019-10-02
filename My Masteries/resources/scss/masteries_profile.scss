@@ -1,0 +1,62 @@
+﻿div.container {
+    max-width: inherit;
+    background-repeat: no-repeat;
+    background-image: url('/public/images/camille.jpg');
+    background-size: cover;
+    background-position-y: -100px;
+    min-height: 550px;
+
+    .masteries-wrapper {
+        margin: 0 auto;
+
+        .masteries-description-wrapper {
+            .masteries-description {
+                margin: 0 auto;
+                background-color: rgba(0, 0, 0, 0.8);
+                border: 5px solid #566880;
+                height: 25em;
+
+                .title {
+                    text-align: center;
+                    font-size: 2em;
+                    font-weight: bolder;
+                    color: #dfdfdf;
+                    border-bottom: 3px solid #566880;
+                }
+
+                .col-md-10 {
+                    color: white;
+                    margin: 0 auto;
+                    margin-top: 0px;
+                    margin-top: 1em;
+
+                    .quote {
+                        float: right;
+                        font-weight: bold;
+                        font-size: 1.2em;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.stat-wheel-svg {
+    height: 15em;
+
+    .stat-wheel-middle {
+        fill: #4444f1
+    }
+    // remplace to variable
+    .fill:nth-child(1) {
+        fill: #566880
+    }
+
+    .fill:nth-child(2) {
+        fill: #305280
+    }
+
+    .fill:nth-child(3) {
+        fill: #182a42
+    }
+}
