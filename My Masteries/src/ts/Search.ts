@@ -1,18 +1,18 @@
 ﻿import { InvalidArgumentError, SummonerNotFound, MasteriesNotFound } from './Exceptions';
 import { ISummoner, IChampionMastery } from './Interfaces';
-import { cache, getSummonerFromCache, cacheSummoner } from './Cache';
+import Cache = require('./Cache');
 const ViewController = require('./ViewController');
 const axios = require('axios');
 require('dotenv').config();
 
 export async function getSummoner(res, parsedUrl: any) {
     const { summoner_name: summonerName, region } = parsedUrl.query;
+
     if (!summonerName || !region) {
         throw new InvalidArgumentError();
     }
 
-    let summoner = getSummonerFromCache(summonerName, region);
-
+    let summoner = Cache.getSummoner(summonerName, region);
     try {
         if (summoner == undefined) {
             summoner = await searchSummoner(summonerName, region);
@@ -22,18 +22,17 @@ export async function getSummoner(res, parsedUrl: any) {
             ViewController.renderSummonerNotFound(res, summonerName);
         }
     };
-
     let masteries = summoner.masteries;
 
     try {
         if (!masteries) {
             summoner.masteries = await searchMasteries(summoner);
-            cacheSummoner(summoner);
+            Cache.saveSummoner(summoner);
         }
     } catch (e) {
         console.log(e);
         if (e instanceof MasteriesNotFound || e instanceof InvalidArgumentError) {
-            ViewController.renderError(res, '404');
+            ViewController.renderError(res, '404', 'Masteries not found');
         }
     }
 
@@ -58,6 +57,7 @@ async function searchSummoner(name: string, region: string): Promise<ISummoner> 
 }
 
 async function searchMasteries(summoner: ISummoner): Promise<Array<IChampionMastery>> {
+    console.log(summoner);
     if (!summoner || !summoner.id) {
         throw new InvalidArgumentError();
     }
