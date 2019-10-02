@@ -36,49 +36,71 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="resources\templates\components\mixins\masteries_wheel.pug">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="resources\ts\masteries\masteries_profile.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="server.ts" />
     <Content Include=".env" />
     <Content Include="example.env" />
-    <Content Include="src\scss\app.scss">
+    <Content Include="public\images\akali_kda.jpg" />
+    <Content Include="public\images\camille.jpg" />
+    <Content Include="public\images\jarvan_iv_darkstar.jpg" />
+    <Content Include="public\images\svg\double_arrow.svg" />
+    <Content Include="public\images\sylas_lunarwraith.jpg" />
+    <Content Include="public\images\svg\right-arrow.svg" />
+    <Content Include="resources\images\akali_kda.jpg" />
+    <Content Include="resources\images\camille.jpg" />
+    <Content Include="resources\images\jarvan_iv_darkstar.jpg" />
+    <Content Include="resources\images\svg\mastery-wheel.svg">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\scss\home.scss">
+    <Content Include="resources\images\svg\right-arrow.svg" />
+    <Content Include="resources\images\sylas_lunarwraith.jpg" />
+    <Content Include="public\images\varus.jpg" />
+    <Content Include="resources\images\varus.jpg" />
+    <Content Include="resources\scss\app.scss">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\scss\masteries_profile.scss">
+    <Content Include="resources\scss\home.scss">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\scss\top_masteries.scss">
+    <Content Include="resources\scss\masteries_profile.scss">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\scss\variables.scss">
+    <Content Include="resources\scss\top_masteries.scss">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\templates\components\app.pug">
+    <Content Include="resources\scss\variables.scss">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\templates\components\footer.pug">
+    <Content Include="resources\templates\components\app.pug">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\templates\components\error.pug">
+    <Content Include="resources\templates\components\mixins\dropdown.pug">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\templates\components\header.pug">
+    <Content Include="resources\templates\components\footer.pug">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\templates\home.pug">
+    <Content Include="resources\templates\components\error.pug">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\templates\masteries\card.pug">
+    <Content Include="resources\templates\components\header.pug">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\templates\masteries_profile.pug">
+    <Content Include="resources\templates\home.pug">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\templates\error.pug">
+    <Content Include="resources\templates\masteries\masteries_description.pug">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\templates\summoner\summoner.pug">
+    <Content Include="resources\templates\masteries_profile.pug">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="resources\templates\error.pug">
       <SubType>Code</SubType>
     </Content>
     <Content Include="tsconfig.json" />
@@ -87,16 +109,25 @@
     <TypeScriptCompile Include="src\ts\Cache.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ts\Champion\Champion.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ts\Champion\ChampionMapper.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\ts\Interfaces.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\ts\MasteriesDigester.ts">
+    <TypeScriptCompile Include="src\ts\Mastery\MasteryMapper.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\ts\Mastery\MasteryProfile.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ts\Search.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\ts\Exceptions.ts">
+    <TypeScriptCompile Include="src\ts\Exceptions\Exceptions.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\ts\ViewController.ts">
@@ -104,17 +135,28 @@
     </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="src\scss\" />
+    <Folder Include="resources\" />
+    <Folder Include="public\css\" />
+    <Folder Include="public\images\" />
+    <Folder Include="public\images\svg\" />
+    <Folder Include="resources\images\" />
+    <Folder Include="resources\images\svg\" />
+    <Folder Include="resources\ts\" />
+    <Folder Include="resources\scss\" />
     <Folder Include="public\" />
+    <Folder Include="resources\ts\masteries\" />
     <Folder Include="src\" />
-    <Folder Include="src\templates\" />
-    <Folder Include="src\templates\components\" />
-    <Folder Include="src\templates\masteries\" />
-    <Folder Include="src\templates\summoner\" />
+    <Folder Include="resources\templates\" />
+    <Folder Include="resources\templates\components\" />
+    <Folder Include="resources\templates\components\mixins\" />
+    <Folder Include="resources\templates\masteries\" />
     <Folder Include="src\ts\" />
+    <Folder Include="src\ts\Champion\" />
+    <Folder Include="src\ts\Mastery\" />
+    <Folder Include="src\ts\Exceptions\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\ts\Champions.ts">
+    <Compile Include="src\ts\Champion\ChampionData.ts">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="webpack.mix.js" />
