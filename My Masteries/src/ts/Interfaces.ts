@@ -1,4 +1,5 @@
 ﻿import { MasteriesProfile } from "./MasteriesDigester";
+import { Champion } from "./Champion/Champion";
 
 export interface IChampionMastery {
     championId: number;
@@ -34,12 +35,12 @@ export declare interface ITemplateData {
     errorText?: string;
 }
 
-export declare interface ITemplateDataMasteries{
+export declare interface ITemplateDataMasteries {
     view: string;
     title: string;
     ddragonVersion?: string;
     masteries: Array<IChampionMastery>;
     topMasteries: Array<IChampionMastery>
     summoner: ISummoner;
-    champions: Map<string, IChampion>;
+    champions: Map<string, Champion>;
 }

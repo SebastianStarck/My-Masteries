@@ -1,6 +1,7 @@
 ﻿import NodeCache = require('node-cache');
 import { ISummoner } from './Interfaces';
 import { getMappedChampions } from './Champion/ChampionMapper';
+import { Champion } from './Champion/Champion';
 export const cache = new NodeCache();
 const cacheDurationInDays = 7;
 
@@ -17,7 +18,7 @@ export function saveSummoner(summoner: ISummoner): boolean {
     return cache.set(`${summoner.region}_${summoner.name}`, summoner, cacheDurationInDays * 86400);
 }
 
-export function getChampions() {
+export function getChampions(): Map<string, Champion> {
     return cache.get('mappedChampions');
 }
 

@@ -2,6 +2,7 @@
 import url = require('url');
 import path = require('path');
 import fs = require('fs');
+import ChampionData = require('./src/ts/Champion/ChampionMapper');
 
 import Search = require('./src/ts/Search');
 import ViewController = require('./src/ts/ViewController');
@@ -46,7 +47,7 @@ function handleResource(req, res, parsedUrl): void {
 
 async function handleSearch(res, parsedUrl) {
     const summoner = await Search.getSummoner(res, parsedUrl);
-    const champions = await Champions.getMappedChampions();
+    const champions: Map<string, Champion> = Cache.getChampions();
 
     const digestedMasteries = digestMasteries(summoner.masteries);
     summoner.masteriesProfile = digestedMasteries;
