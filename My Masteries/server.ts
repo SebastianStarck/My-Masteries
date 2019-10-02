@@ -5,12 +5,17 @@ import fs = require('fs');
 
 import Search = require('./src/ts/Search');
 import ViewController = require('./src/ts/ViewController');
+import Cache = require('./src/ts/Cache');
 import Champions = require('./src/ts/Champions');
 import { cache, cacheSummoner } from './src/ts/Cache';
 import { digestMasteries, MasteriesProfile } from './src/ts/MasteriesDigester';
 const port = 8080;
 
-http.createServer(function (req, res) {
+http.createServer(async function (req, res) {
+    if (!Cache.getChampions()) {
+        await Cache.mapChampions();
+    }
+    
     const parsedUrl = url.parse(req.url, true);
 
     cache.flushAll();
