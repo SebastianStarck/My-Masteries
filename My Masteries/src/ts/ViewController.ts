@@ -1,14 +1,15 @@
-﻿import { ITemplateData, ITemplateDataMasteries, ISummoner, IChampionMastery, IChampion } from "./Interfaces";
+﻿import { ITemplateData, ITemplateDataMasteries, ISummoner } from "./Interfaces";
 const path = require('path');
 const pug = require('pug');
 require('dotenv').config();
 
 function compileTemplate(data: ITemplateData | ITemplateDataMasteries): string {
     data.ddragonVersion = process.env.DDRAGON_VERSION;
-    return pug.renderFile(`src/templates/${data.view}.pug`, data || {
+    return pug.renderFile(`resources/templates/${data.view}.pug`, data || {
         title: 'My Masteries',
         stylesheet: path.join('./', data.view),
-        view: 'home'
+        view: 'home',
+        ddragonVersion: process.env.DDRAGON_VERSION,
     });
 }
 
@@ -29,16 +30,16 @@ export function renderHome(res): void {
     }))
 }
 
-export function renderError(res, error?: string, fileExt?: string): void {
-    res.writeHead(404, { 'Content-Type': 'text/' + fileExt || 'html' });
+export function renderError(res, error?: string, fileExt?: string, errorCode?: number): void {
+    res.writeHead(errorCode || 404, { 'Content-Type': 'text/' + fileExt || 'html' });
     res.end(compileTemplate({
         view: 'error',
         title: `Error ${error}`,
-        errorText: 'Something went wrong!'
+        errorText: error
     }));
 }
 
-export function renderSummonerMasteries(res, summoner: ISummoner, champions: Map<string, IChampion>): void {
+export function renderSummonerMasteries(res, summoner: ISummoner, champions: object): void {
     res.end(compileTemplate({
         view: 'masteries_profile',
         title: `${summoner.name || 'Summoner'}'s Masteries`,
