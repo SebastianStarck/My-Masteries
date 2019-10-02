@@ -29,3 +29,11 @@ export class ChampionsDataNotFound extends Error {
         this.name = ChampionsDataNotFound.name;
     }
 }
+
+export class InvalidMasteryProfileAttributeMap extends Error {
+    constructor(message?: string) {
+        super(message);
+        Object.setPrototypeOf(this, new.target.prototype);
+        this.name = InvalidMasteryProfileAttributeMap.name;
+    }
+}
