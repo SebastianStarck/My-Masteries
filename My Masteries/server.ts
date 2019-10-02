@@ -3,13 +3,11 @@ import url = require('url');
 import path = require('path');
 import fs = require('fs');
 import ChampionData = require('./src/ts/Champion/ChampionMapper');
-
 import Search = require('./src/ts/Search');
 import ViewController = require('./src/ts/ViewController');
 import Cache = require('./src/ts/Cache');
-import Champions = require('./src/ts/Champions');
-import { cache, cacheSummoner } from './src/ts/Cache';
-import { digestMasteries, MasteriesProfile } from './src/ts/MasteriesDigester';
+import { mapMasteries } from './src/ts/Mastery/MasteryMapper';
+import { Champion } from './src/ts/Champion/Champion';
 const port = 8080;
 
 http.createServer(async function (req, res) {
@@ -19,7 +17,6 @@ http.createServer(async function (req, res) {
     
     const parsedUrl = url.parse(req.url, true);
 
-    cache.flushAll();
     if (req.url == '/') {
         ViewController.renderHome(res);
     }
