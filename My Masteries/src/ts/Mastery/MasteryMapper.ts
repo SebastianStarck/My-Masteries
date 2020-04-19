@@ -4,7 +4,7 @@ import { MasteriesProfile } from "./MasteryProfile";
 import { Champion } from "../Champion/Champion";
 import { ChampionsDataNotFound } from "../Exceptions/Exceptions";
 
-export async function mapMasteries(masteries: Array<IChampionMastery>) {
+export async function map(masteries: Array<IChampionMastery>) {
     const champions = await Cache.getChampions();
     const masteriesProfile = new MasteriesProfile(masteries);
 

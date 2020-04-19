@@ -9,7 +9,15 @@
     .masteries-wrapper {
         margin: 0 auto;
 
-        .masteries-description-wrapper {
+        .masteries-description-container {
+            div.masteries-stats-wrapper, div.masteries-description-wrapper, div.masteries-champions-wrapper {
+                display: none;
+
+                &.active {
+                    display: inline
+                }
+            }
+
             .masteries-description {
                 margin: 0 auto;
                 background-color: rgba(0, 0, 0, 0.8);
@@ -38,6 +46,28 @@
                 }
             }
         }
+
+        .tab-wrapper {
+            width: 85%;
+
+            .tab-link {
+                border: 5px solid #566880;
+                border-bottom: none;
+                background-color: rgba(0, 0, 0, 0.8);
+                font-weight: bolder;
+                color: white;
+                font-variant-caps: small-caps;
+
+                &.active {
+                    color: #fdd501;
+                }
+            }
+        }
+    }
+
+    #myChart {
+        width: 128px;
+        height: 128px;
     }
 }
 

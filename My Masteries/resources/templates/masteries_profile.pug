@@ -5,4 +5,12 @@ block content
     div(class="container" data-summoner-name=summoner.name data-summoner-region=summoner.region)
         div(class="row")
             div(class="col-md-10 p-0 mt-5 masteries-wrapper")
+                div(class="row tab-wrapper")
+                    div(class="col-md-2")
+                    button(class="col-md-2 tab-link masteries-description active") Description
+                    button(class="col-md-2 tab-link masteries-stats") Stats
+                    button(class="col-md-2 tab-link masteries-champions") Champions
+                div(class="masteries-description-container")
                     include masteries/masteries_description.pug
+                    include masteries/masteries_stats.pug
+                    include masteries/masteries_champions.pug

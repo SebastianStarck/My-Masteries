@@ -1,4 +1,5 @@
 ﻿import Cache = require('../Cache');
+import { Champion } from './Champion';
 const axios = require('axios');
 
 // TODO: Tidy up error handling
@@ -123,7 +124,7 @@ export function getChampionLanesNames(): Array<string> {
     return Object.keys(getChampionsByLane());
 }
 
-export function getChampionBaseTagNames(): Array<string> {
+export function getChampionTagNames(): Array<string> {
     return [
         'fighter', 'tank', 'support', 'marksman', 'mage', 'assassin'
     ];
@@ -291,7 +292,6 @@ export function getChampionAdvancedTags(champion: string): Array<string> {
     const championsByAdvancedTags = getChampionsByAdvancedTags();
     const advancedTagNames = getChampionAdvancedTagNames();
 
-    console.log(champion, 'foo');
     return advancedTagNames.filter(function (tag: string) {
         return championsByAdvancedTags[tag].indexOf(champion) != -1;
     });
@@ -310,6 +310,10 @@ export function getChampionsAdvancedStatNames(): Array<string> {
     return [
         'damage', 'toughness', 'control', 'mobility', 'utility', 'damageStyle', 'damageRating', 'difficulty'
     ];
+}
+
+export function getChampion(key: number): Champion {
+    return Cache.getChampions()[key];
 }
 
 const championMap: Map<number, string> = new Map([

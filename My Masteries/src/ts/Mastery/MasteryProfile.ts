@@ -9,7 +9,7 @@ export class MasteriesProfile {
     tags: Map<string, number>;
     advancedTags: Map<string, number>;
     lanes: Map<string, number>;
-    masteries: Array<IChampionMastery>
+    masteries: Array<IChampionMastery>;
 
     constructor(masteries: Array<IChampionMastery>) {
         this.info = new Map();
@@ -46,14 +46,29 @@ export class MasteriesProfile {
         return attributeMap;
     }
 
-    public getTopChampions(amount?: number): Array<string> {
+    public getTopChampions = (amount?: number): Array<string> => {
         return this.masteries.slice(0, amount || 5).map((championMastery) => {
             return ChampionData.getChampionName(championMastery.championId);
         });
     };
 
-    public getMasteriesProfileArchtype = () => {
+    public getTopChampion = () => {
+        return ChampionData.getChampion(this.masteries[0].championId);
+    };
 
+    public getTopSubAttribute = (attribute: string) => {
+        const tags = this.getAttributeMap(attribute);
+        return new Map(
+            Array
+                .from(tags)
+                .sort((a: any, b: any) => {
+                    return b[1] - a[1];
+                })
+        ).entries().next().value[0];
+    }
+
+    public getMasteriesProfileArchtype = () => {
+        return '';
     };
 }
 

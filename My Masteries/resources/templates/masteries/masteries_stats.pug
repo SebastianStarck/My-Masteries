@@ -1,0 +1,66 @@
+﻿div(class="masteries-stats-wrapper")
+    div(class="col-md-1")
+    div(class="col-md-10 masteries-description p-0") 
+        p(class="title") #{summoner.name} 
+        div(class="row")
+            div(class="col-md-10")
+            div(class="col-md-2")
+                canvas(id="myChart" width="200" height="200")
+    div(class="col-md-1")
+
+- var labels = Array.from(summonerMasteriesStats.masteriesClassesByContribution.keys())
+- var data = Array.from(summonerMasteriesStats.masteriesClassesByContribution.values())
+
+script.
+    var labels = cleanupLabels('#{labels}'.split(','));
+    var ctx = document.getElementById('myChart');
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Classes',
+                data: [#{data}],
+                backgroundColor: [
+                    'rgba(120, 34, 191, 1)',
+                    'rgba(68, 68, 242, 1)',
+                    'rgba(191, 131, 34, 1)',
+                    'rgba(120, 95, 140, 1)',
+                    'rgba(244, 211, 129, 1)',
+                    'rgba(145, 145, 247, 1)',
+                ],
+                borderWidth: 0,
+                borderColor: 'rgb(0, 0, 0)',
+                hoverBorderWidth: 2
+            }]
+        },
+        options: {
+            scales: {
+                display: false
+            },
+            legend: {
+                display: false,
+            },
+            tooltips: {
+                callbacks: {
+                    label:  function(tooltipItem, data) {
+                        var label = data.labels[tooltipItem.index] || '';
+
+                        if (label) {
+                            label += ': ';
+                        }
+
+                        label += Math.round(data.datasets[0].data[tooltipItem.index] * 100) / 100 + '%';
+
+                        return label;
+                    }
+                }
+            }
+        }
+    });
+    function cleanupLabels(labels) {
+        return labels.map(function(label) { 
+            var cleanedLabel = label.slice(0, label.indexOf('MasteryPoints'));
+            return cleanedLabel[0].toUpperCase() + cleanedLabel.slice(1);
+            })
+        }

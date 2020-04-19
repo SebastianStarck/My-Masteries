@@ -2,6 +2,7 @@
 import { ISummoner } from './Interfaces';
 import { getMappedChampions } from './Champion/ChampionMapper';
 import { Champion } from './Champion/Champion';
+import { Summoner } from './Summoner/Summoner';
 export const cache = new NodeCache();
 const cacheDurationInDays = 7;
 
@@ -10,7 +11,7 @@ export async function mapChampions() {
     cache.set('mappedChampions', champions, cacheDurationInDays * 86400);
 }
 
-export function getSummoner(summonerName: string, region: string): ISummoner | undefined {
+export function getSummoner(summonerName: string, region: string): Summoner | undefined {
     return cache.get(`${region}_${summonerName}`);
 }
 
