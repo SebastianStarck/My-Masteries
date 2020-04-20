@@ -1,6 +1,7 @@
 ﻿import ChampionData = require('../Champion/ChampionData');
 import { IChampionMastery } from '../Interfaces';
 import { InvalidMasteryProfileAttributeMap } from '../Exceptions/Exceptions';
+import { Champion, DecoratedChampion } from "../Champion/Champion";
 
 export class MasteriesProfile {
     totalMasteryPoints: number;
@@ -44,11 +45,11 @@ export class MasteriesProfile {
         }
 
         return attributeMap;
-    }
+    };
 
-    public getTopChampions = (amount?: number): Array<string> => {
+    public getTopChampions = (amount?: number): Array<DecoratedChampion> => {
         return this.masteries.slice(0, amount || 5).map((championMastery) => {
-            return ChampionData.getChampionName(championMastery.championId);
+            return new DecoratedChampion(ChampionData.getChampion(championMastery.championId));
         });
     };
 
@@ -65,7 +66,7 @@ export class MasteriesProfile {
                     return b[1] - a[1];
                 })
         ).entries().next().value[0];
-    }
+    };
 
     public getMasteriesProfileArchtype = () => {
         return '';
