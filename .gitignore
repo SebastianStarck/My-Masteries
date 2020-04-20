@@ -354,4 +354,5 @@ My Masteries/node_modules/
 My Masteries/public
 *.map
 *.js
+!webpack.mix.js
 *.css
